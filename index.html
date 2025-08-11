@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 设置网页的基本信息 -->
+    <meta charset="UTF-8"> <!-- 设置字符编码为UTF-8，支持中文显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 让网页在移动设备上正常显示 -->
+    <title>电子游戏发展进程 - Game Evolution Timeline</title> <!-- 网页标题 -->
+    
+    <!-- 引入Google字体和图标库 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* 重置默认样式，让所有元素从零开始设计 */
+        * {
+            margin: 0; /* 清除默认外边距 */
+            padding: 0; /* 清除默认内边距 */
+            box-sizing: border-box; /* 让宽度包含边框和内边距 */
+        }
+
+        /* 设置整个页面的基本样式 */
+        body {
+            font-family: 'Noto Sans SC', sans-serif; /* 使用中文友好的字体 */
+            line-height: 1.6; /* 设置行高，让文字更易读 */
+            color: #333; /* 设置文字颜色为深灰色 */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 设置渐变背景 */
+            min-height: 100vh; /* 让页面至少占满整个屏幕高度 */
+        }
+
+        /* 页面头部样式 */
+        .header {
+            text-align: center; /* 文字居中对齐 */
+            padding: 60px 20px; /* 设置内边距：上下60px，左右20px */
+            background: rgba(255, 255, 255, 0.1); /* 半透明白色背景 */
+            backdrop-filter: blur(10px); /* 背景模糊效果 */
+            margin-bottom: 40px; /* 底部外边距 */
+        }
+
+        /* 主标题样式 */
+        .header h1 {
+            font-size: 3.5rem; /* 设置字体大小 */
+            font-weight: 700; /* 设置字体粗细 */
+            color: white; /* 白色文字 */
+            margin-bottom: 10px; /* 底部外边距 */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* 文字阴影效果 */
+        }
+
+        /* 副标题样式 */
+        .header p {
+            font-size: 1.2rem; /* 字体大小 */
+            color: rgba(255, 255, 255, 0.9); /* 半透明白色 */
+            font-weight: 300; /* 较细的字体 */
+        }
+
+        /* 主要内容容器 */
+        .container {
+            max-width: 1200px; /* 最大宽度限制 */
+            margin: 0 auto; /* 水平居中 */
+            padding: 0 20px; /* 左右内边距 */
+        }
+
+        /* 时间线容器 */
+        .timeline {
+            position: relative; /* 相对定位，为子元素提供定位参考 */
+            padding: 20px 0; /* 上下内边距 */
+        }
+
+        /* 时间线中央的线条 */
+        .timeline::before {
+            content: ''; /* 创建伪元素 */
+            position: absolute; /* 绝对定位 */
+            left: 50%; /* 水平居中 */
+            transform: translateX(-50%); /* 精确居中 */
+            width: 4px; /* 线条宽度 */
+            height: 100%; /* 占满整个高度 */
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); /* 渐变色线条 */
+            border-radius: 2px; /* 圆角 */
+        }
+
+        /* 时间线项目容器 */
+        .timeline-item {
+            position: relative; /* 相对定位 */
+            margin-bottom: 60px; /* 底部外边距 */
+            width: 100%; /* 占满宽度 */
+        }
+
+        /* 时间线项目内容 */
+        .timeline-content {
+            background: white; /* 白色背景 */
+            border-radius: 15px; /* 圆角 */
+            padding: 30px; /* 内边距 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* 阴影效果 */
+            width: 45%; /* 宽度为45% */
+            position: relative; /* 相对定位 */
+            transition: all 0.3s ease; /* 过渡动画 */
+        }
+
+        /* 鼠标悬停时的效果 */
+        .timeline-content:hover {
+            transform: translateY(-5px); /* 向上移动5px */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15); /* 增强阴影 */
+        }
+
+        /* 左侧项目定位 */
+        .timeline-item:nth-child(odd) .timeline-content {
+            left: 0; /* 靠左对齐 */
+        }
+
+        /* 右侧项目定位 */
+        .timeline-item:nth-child(even) .timeline-content {
+            left: 55%; /* 靠右对齐 */
+        }
+
+        /* 时间线上的圆点 */
+        .timeline-dot {
+            position: absolute; /* 绝对定位 */
+            left: 50%; /* 水平居中 */
+            transform: translateX(-50%); /* 精确居中 */
+            width: 20px; /* 圆点宽度 */
+            height: 20px; /* 圆点高度 */
+            background: #fff; /* 白色背景 */
+            border: 4px solid #667eea; /* 蓝色边框 */
+            border-radius: 50%; /* 圆形 */
+            top: 30px; /* 距离顶部30px */
+            z-index: 2; /* 层级，确保在线条之上 */
+        }
+
+        /* 年份标签 */
+        .year {
+            font-size: 1.8rem; /* 字体大小 */
+            font-weight: 700; /* 字体粗细 */
+            color: #667eea; /* 蓝色 */
+            margin-bottom: 15px; /* 底部外边距 */
+            display: flex; /* 弹性布局 */
+            align-items: center; /* 垂直居中 */
+            gap: 10px; /* 元素间距 */
+        }
+
+        /* 事件标题 */
+        .event-title {
+            font-size: 1.4rem; /* 字体大小 */
+            font-weight: 500; /* 字体粗细 */
+            color: #2c3e50; /* 深蓝灰色 */
+            margin-bottom: 10px; /* 底部外边距 */
+        }
+
+        /* 事件描述 */
+        .event-description {
+            color: #666; /* 灰色文字 */
+            line-height: 1.8; /* 行高 */
+            font-size: 1rem; /* 字体大小 */
+        }
+
+        /* 图标样式 */
+        .icon {
+            font-size: 1.2rem; /* 图标大小 */
+            color: #667eea; /* 蓝色 */
+        }
+
+        /* 响应式设计：在小屏幕上的样式 */
+        @media (max-width: 768px) {
+            /* 移动设备上的头部样式 */
+            .header h1 {
+                font-size: 2.5rem; /* 减小字体 */
+            }
+            
+            .header p {
+                font-size: 1rem; /* 减小字体 */
+            }
+
+            /* 移动设备上隐藏中央线条 */
+            .timeline::before {
+                left: 20px; /* 移到左侧 */
+                transform: none; /* 取消居中变换 */
+            }
+
+            /* 移动设备上的时间线项目 */
+            .timeline-content {
+                width: calc(100% - 60px); /* 调整宽度 */
+                left: 60px !important; /* 统一左对齐 */
+            }
+
+            /* 移动设备上的圆点位置 */
+            .timeline-dot {
+                left: 20px; /* 移到左侧 */
+                transform: none; /* 取消居中变换 */
+            }
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center; /* 居中对齐 */
+            padding: 40px 20px; /* 内边距 */
+            background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 背景模糊 */
+            margin-top: 60px; /* 顶部外边距 */
+            color: white; /* 白色文字 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面头部 -->
+    <div class="header">
+        <h1>电子游戏发展进程</h1>
+        <p>从简单的像素点到虚拟现实的奇妙旅程</p>
+    </div>
+
+    <!-- 主要内容容器 -->
+    <div class="container">
+        <!-- 时间线开始 -->
+        <div class="timeline">
+            
+            <!-- 1972年 - Pong游戏 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-gamepad icon"></i>
+                        1972年
+                    </div>
+                    <div class="event-title">Pong - 电子游戏的诞生</div>
+                    <div class="event-description">
+                        Atari公司发布了Pong，这是第一款商业成功的电子游戏。这个简单的乒乓球模拟游戏标志着电子游戏产业的正式开始，为后来的游戏发展奠定了基础。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1980年 - 吃豆人 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-circle icon"></i>
+                        1980年
+                    </div>
+                    <div class="event-title">吃豆人 - 街机游戏的黄金时代</div>
+                    <div class="event-description">
+                        南梦宫发布了《吃豆人》，这款游戏成为了文化现象，不仅在游戏界取得巨大成功，还影响了流行文化。它证明了游戏可以吸引更广泛的受众群体。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1985年 - 超级马里奥兄弟 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-home icon"></i>
+                        1985年
+                    </div>
+                    <div class="event-title">超级马里奥兄弟 - 家用游戏机的崛起</div>
+                    <div class="event-description">
+                        任天堂发布了《超级马里奥兄弟》，这款游戏拯救了当时低迷的家用游戏机市场。精美的关卡设计和流畅的操作体验设立了平台游戏的标准。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1993年 - 毁灭战士 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-crosshairs icon"></i>
+                        1993年
+                    </div>
+                    <div class="event-title">毁灭战士 - 3D游戏的革命</div>
+                    <div class="event-description">
+                        id Software发布了《毁灭战士》，这款游戏普及了第一人称射击游戏类型，并展示了3D图形技术的潜力。它也是最早支持网络多人游戏的作品之一。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1996年 - 超级马里奥64 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-cube icon"></i>
+                        1996年
+                    </div>
+                    <div class="event-title">超级马里奥64 - 3D平台游戏的诞生</div>
+                    <div class="event-description">
+                        任天堂64发布了《超级马里奥64》，这是第一款真正成功的3D平台游戏。创新的摄像头控制和3D移动机制为后来的3D游戏设计奠定了基础。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2004年 - 魔兽世界 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-globe icon"></i>
+                        2004年
+                    </div>
+                    <div class="event-title">魔兽世界 - 在线游戏的新纪元</div>
+                    <div class="event-description">
+                        暴雪娱乐发布了《魔兽世界》，这款大型多人在线角色扮演游戏重新定义了网络游戏。它创造了持续的虚拟世界，让数百万玩家可以同时在线互动。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2007年 - iPhone和移动游戏 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-mobile-alt icon"></i>
+                        2007年
+                    </div>
+                    <div class="event-title">iPhone发布 - 移动游戏革命</div>
+                    <div class="event-description">
+                        苹果发布iPhone，触屏技术和应用商店模式彻底改变了游戏产业。移动游戏变得更加普及，让游戏触达了前所未有的广泛受众。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2016年 - VR游戏 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-vr-cardboard icon"></i>
+                        2016年
+                    </div>
+                    <div class="event-title">VR设备普及 - 沉浸式体验的开始</div>
+                    <div class="event-description">
+                        Oculus Rift、HTC Vive等VR设备的发布标志着虚拟现实游戏时代的到来。玩家可以身临其境地体验游戏世界，开启了全新的游戏体验方式。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2020年 - 云游戏 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="year">
+                        <i class="fas fa-cloud icon"></i>
+                        2020年
+                    </div>
+                    <div class="event-title">云游戏兴起 - 游戏无处不在</div>
+                    <div class="event-description">
+                        Google Stadia、NVIDIA GeForce Now等云游戏服务的推出，让玩家可以在任何设备上玩高质量游戏，无需昂贵的硬件。这预示着游戏产业的下一个重大变革。
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        <p>&copy; 2024 电子游戏发展进程展示 | 探索游戏历史的精彩旅程</p>
+    </div>
+
+    <script>
+        // JavaScript代码：添加页面交互效果
+        
+        // 当页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 获取所有时间线项目元素
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            // 创建观察器，用于检测元素是否进入视窗
+            const observer = new IntersectionObserver((entries) => {
+                // 遍历每个被观察的元素
+                entries.forEach(entry => {
+                    // 如果元素进入视窗
+                    if (entry.isIntersecting) {
+                        // 添加动画类名
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1 // 当元素10%可见时触发
+            });
+            
+            // 为每个时间线项目添加初始样式和观察
+            timelineItems.forEach(item => {
+                // 设置初始状态：透明且向下偏移
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(50px)';
+                item.style.transition = 'all 0.6s ease-out';
+                
+                // 开始观察这个元素
+                observer.observe(item);
+            });
+            
+            // 平滑滚动效果
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault(); // 阻止默认跳转行为
+                    
+                    // 获取目标元素
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        // 平滑滚动到目标位置
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
